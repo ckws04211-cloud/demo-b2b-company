@@ -1,0 +1,121 @@
+{
+  "meta": { "title": "Hanbit Precision | Precision Machined Parts", "description": "Precision shafts, gears and brackets, from prototype to volume production." },
+  "brand": { "name": "Hanbit Precision", "tagline": "HANBIT PRECISION" },
+  "nav": { "about": "Company", "business": "Industries", "products": "Products", "facilities": "Facilities", "notices": "News", "location": "Location", "inquiry": "Request a Quote" },
+  "home": {
+    "eyebrow": "PRECISION MACHINING SINCE 1998",
+    "title1": "A 0.005mm difference",
+    "title2": "changes product quality",
+    "desc": "Hanbit Precision machines shafts, gears, brackets and other precision metal parts, from prototype to volume production.",
+    "ctaQuote": "Request a Quote",
+    "ctaProducts": "View Products",
+    "stats": [
+      { "value": "28 yrs", "label": "In precision machining" },
+      { "value": "42", "label": "CNC & 5-axis machines" },
+      { "value": "±0.005mm", "label": "Tightest tolerance" },
+      { "value": "15", "label": "Export countries" }
+    ],
+    "productsTitle": "Featured Products",
+    "productsMore": "All products",
+    "whyTitle": "Why Hanbit",
+    "why": [
+      { "title": "One-stop production", "desc": "Machining, heat treatment, finishing and inspection under one roof." },
+      { "title": "Strict quality control", "desc": "A CMM inspection report ships with every order." },
+      { "title": "Low-volume friendly", "desc": "From a single prototype to 10,000 units per month." }
+    ],
+    "noticeTitle": "News",
+    "ctaBand": "All we need is your drawing",
+    "ctaBandDesc": "Send a 2D or 3D drawing and we will reply with a quote within 2 business days."
+  },
+  "about": {
+    "title": "Company",
+    "desc": "28 years of trust built on precision",
+    "ceoTitle": "Message from the CEO",
+    "ceoBody": "Founded in 1998 with a single lathe, Hanbit Precision has grown into a precision machining company with 42 advanced machines. Accurately realizing the intent behind every customer drawing is the principle we have kept for 28 years.",
+    "ceoName": "Hanbit Lee, CEO",
+    "historyTitle": "History",
+    "history": [
+      { "year": "2025", "text": "Expanded 5-axis line; exports to 15 countries" },
+      { "year": "2019", "text": "Established in-house R&D center" },
+      { "year": "2012", "text": "Certified ISO 9001 / ISO 14001" },
+      { "year": "2005", "text": "Moved to new plant in Namdong Industrial Complex, Incheon" },
+      { "year": "1998", "text": "Hanbit Precision founded" }
+    ],
+    "certTitle": "Certifications",
+    "certs": ["ISO 9001:2015", "ISO 14001:2015", "Corporate R&D Center", "Promising Export SME"]
+  },
+  "business": {
+    "title": "Industries",
+    "desc": "Precision machining tailored to each industry",
+    "items": [
+      { "title": "Semiconductor equipment", "desc": "Shafts for wafer transfer systems, precision jigs and clean, high-accuracy parts" },
+      { "title": "Robotics & automation", "desc": "Reducer gears, joint shafts and lightweight aluminum brackets" },
+      { "title": "Automotive", "desc": "Electrification parts and custom parts for test equipment" },
+      { "title": "Medical devices", "desc": "High-mix, low-volume precision parts in stainless steel and titanium" }
+    ]
+  },
+  "products": {
+    "title": "Products",
+    "desc": "From standard parts to build-to-print machining",
+    "all": "All",
+    "categories": { "shaft": "Shafts", "gear": "Gears", "bracket": "Brackets", "custom": "Custom" },
+    "specs": "Specifications",
+    "inquire": "Request a quote for this product",
+    "back": "Back to list",
+    "empty": "No products yet."
+  },
+  "facilities": {
+    "title": "Facilities",
+    "desc": "Advanced equipment for precision machining",
+    "cols": { "name": "Equipment", "model": "Model", "qty": "Qty", "spec": "Key spec" },
+    "list": [
+      { "name": "5-axis machining center", "model": "DMG MORI DMU 65", "qty": "6", "spec": "650 × 650 × 560 mm" },
+      { "name": "CNC lathe", "model": "DN Solutions Lynx 2100", "qty": "14", "spec": "Ø300 × 510 mm" },
+      { "name": "Vertical machining center", "model": "DN Solutions DNM 5700", "qty": "10", "spec": "1,300 × 570 × 510 mm" },
+      { "name": "Cylindrical grinder", "model": "Studer S33", "qty": "4", "spec": "Ø350 × 1,000 mm" },
+      { "name": "Gear hobbing machine", "model": "Liebherr LC 180", "qty": "4", "spec": "Module 0.5 – 4" },
+      { "name": "CMM", "model": "Zeiss CONTURA", "qty": "4", "spec": "Accuracy 1.8 µm" }
+    ]
+  },
+  "notices": { "title": "News", "desc": "Latest from Hanbit Precision", "pinned": "Notice", "back": "Back to list", "empty": "No news yet." },
+  "location": {
+    "title": "Location",
+    "desc": "Headquarters & plant",
+    "address": "Address",
+    "addressValue": "000 Namdonggongdan-ro, Namdong-gu, Incheon, Korea",
+    "tel": "Phone",
+    "telValue": "+82-32-000-0000",
+    "fax": "Fax",
+    "faxValue": "+82-32-000-0001",
+    "hours": "Hours",
+    "hoursValue": "Mon – Fri 08:30 – 17:30 (KST)"
+  },
+  "inquiry": {
+    "title": "Request a Quote",
+    "desc": "Send us your drawing or requirements and we will reply within 2 business days.",
+    "company": "Company",
+    "name": "Contact name",
+    "email": "Email",
+    "phone": "Phone",
+    "product": "Product of interest",
+    "productPlaceholder": "Please select",
+    "quantity": "Estimated quantity",
+    "message": "Message",
+    "messagePlaceholder": "Material, quantity, lead time, tolerance and other requirements.",
+    "agree": "I agree to the collection and use of my personal information (company, name, email, phone; kept for 1 year).",
+    "submit": "Send request",
+    "sending": "Sending...",
+    "done": "Your request has been received",
+    "doneDesc": "Our team will reply within 2 business days.",
+    "again": "New request",
+    "errors": {
+      "company": "Please enter your company name.",
+      "name": "Please enter a contact name.",
+      "email": "Please enter a valid email.",
+      "message": "Please enter at least 10 characters.",
+      "agree": "Please agree to the privacy terms.",
+      "server": "Sending failed. Please try again later."
+    }
+  },
+  "footer": { "demo": "This site is a portfolio demo, not a real company.", "admin": "Admin" }
+}

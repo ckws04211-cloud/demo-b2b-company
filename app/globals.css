@@ -1,0 +1,20 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body { @apply bg-white text-ink-800 antialiased; word-break: keep-all; }
+}
+
+@layer components {
+  .container-x { @apply mx-auto w-full max-w-content px-5 md:px-8; }
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-md px-5 py-3 text-sm font-semibold transition disabled:opacity-50; }
+  .btn-primary { @apply btn bg-signal-500 text-white hover:bg-signal-600; }
+  .btn-dark { @apply btn bg-ink-900 text-white hover:bg-ink-700; }
+  .btn-ghost { @apply btn border border-ink-100 bg-white text-ink-700 hover:bg-ink-50; }
+  .eyebrow { @apply text-xs font-bold uppercase tracking-[0.2em] text-signal-500; }
+  .h-section { @apply mt-3 text-3xl font-bold tracking-tight text-ink-900 md:text-[40px] md:leading-tight; }
+  .input { @apply w-full rounded-md border border-ink-100 bg-white px-3.5 py-2.5 text-sm outline-none transition focus:border-signal-500 focus:ring-2 focus:ring-signal-50; }
+  .label { @apply mb-1.5 block text-sm font-semibold text-ink-700; }
+}
