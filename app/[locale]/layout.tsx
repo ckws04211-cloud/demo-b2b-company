@@ -29,10 +29,10 @@ export default async function LocaleLayout({ children, params }: { children: Rea
 
   return (
     <html lang={locale}>
-      <body>
+      <body className="flex min-h-screen flex-col">
         <NextIntlClientProvider>
           <SiteHeader />
-          <main>{children}</main>
+          <main className="flex-1">{children}</main>
           <SiteFooter />
         </NextIntlClientProvider>
       </body>
