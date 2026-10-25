@@ -1,5 +1,5 @@
 import "server-only";
-import { createClient, type SupabaseClient } from "@supabase/supabase-js";
+import type { SupabaseClient } from "@supabase/supabase-js";
 import { seedInquiries, seedNotices, seedProducts } from "./seed";
 import type { Inquiry, InquiryStatus, Notice, Product } from "./types";
 
@@ -19,15 +19,19 @@ function mem(): Store {
   return g.__hanbitStore;
 }
 
-function sb(): SupabaseClient | null {
-  const url = process.env.SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!url || !key) return null;
-  g.__hanbitSb ??= createClient(url, key, { auth: { persistSession: false } });
+const hasSupabase = () => Boolean(process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY);
+
+/** Supabase 라이브러리는 키가 설정된 경우에만 불러옴 (데모 모드에서는 로드하지 않음) */
+async function sb(): Promise<SupabaseClient | null> {
+  if (!hasSupabase()) return null;
+  if (!g.__hanbitSb) {
+    const { createClient } = await import("@supabase/supabase-js");
+    g.__hanbitSb = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!, { auth: { persistSession: false } });
+  }
   return g.__hanbitSb;
 }
 
-export const isDemoStore = () => !sb();
+export const isDemoStore = () => !hasSupabase();
 
 const byDateDesc = <T extends { createdAt: string }>(a: T, b: T) => b.createdAt.localeCompare(a.createdAt);
 
@@ -73,7 +77,7 @@ function must<T>(res: { data: T | null; error: { message: string } | null }): T 
 
 /* ---------- Products ---------- */
 export async function listProducts(opts: { includeHidden?: boolean } = {}): Promise<Product[]> {
-  const c = sb();
+  const c = await sb();
   if (c) {
     let q = c.from("products").select("*").order("created_at", { ascending: false });
     if (!opts.includeHidden) q = q.eq("published", true);
@@ -83,16 +87,18 @@ export async function listProducts(opts: { includeHidden?: boolean } = {}): Prom
 }
 
 export async function getProduct(idOrSlug: string): Promise<Product | null> {
-  const c = sb();
+  const c = await sb();
   if (c) {
-    const { data } = await c.from("products").select("*").or(`id.eq.${idOrSlug},slug.eq.${idOrSlug}`).maybeSingle();
+    // id 컬럼은 uuid라 UUID 형식일 때만 id로, 아니면 slug로 조회
+    const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(idOrSlug);
+    const { data } = await c.from("products").select("*").eq(isUuid ? "id" : "slug", idOrSlug).maybeSingle();
     return data ? toProduct(data) : null;
   }
   return mem().products.find((p) => p.id === idOrSlug || p.slug === idOrSlug) ?? null;
 }
 
 export async function saveProduct(input: Omit<Product, "id" | "createdAt"> & { id?: string }): Promise<void> {
-  const c = sb();
+  const c = await sb();
   if (c) {
     const row = { slug: input.slug, category: input.category, name: input.name, summary: input.summary, description: input.description, specs: input.specs, image: input.image, published: input.published };
     if (input.id) must(await c.from("products").update(row).eq("id", input.id));
@@ -109,7 +115,7 @@ export async function saveProduct(input: Omit<Product, "id" | "createdAt"> & { i
 }
 
 export async function deleteProduct(id: string) {
-  const c = sb();
+  const c = await sb();
   if (c) return void must(await c.from("products").delete().eq("id", id));
   const s = mem();
   s.products = s.products.filter((p) => p.id !== id);
@@ -117,13 +123,13 @@ export async function deleteProduct(id: string) {
 
 /* ---------- Notices ---------- */
 export async function listNotices(): Promise<Notice[]> {
-  const c = sb();
+  const c = await sb();
   const rows = c ? must(await c.from("notices").select("*").order("created_at", { ascending: false })).map(toNotice) : [...mem().notices].sort(byDateDesc);
   return rows.sort((a, b) => Number(b.pinned) - Number(a.pinned));
 }
 
 export async function getNotice(id: string): Promise<Notice | null> {
-  const c = sb();
+  const c = await sb();
   if (c) {
     const { data } = await c.from("notices").select("*").eq("id", id).maybeSingle();
     return data ? toNotice(data) : null;
@@ -132,7 +138,7 @@ export async function getNotice(id: string): Promise<Notice | null> {
 }
 
 export async function saveNotice(input: Omit<Notice, "id" | "createdAt"> & { id?: string }) {
-  const c = sb();
+  const c = await sb();
   if (c) {
     const row = { title: input.title, body: input.body, pinned: input.pinned };
     if (input.id) must(await c.from("notices").update(row).eq("id", input.id));
@@ -149,7 +155,7 @@ export async function saveNotice(input: Omit<Notice, "id" | "createdAt"> & { id?
 }
 
 export async function deleteNotice(id: string) {
-  const c = sb();
+  const c = await sb();
   if (c) return void must(await c.from("notices").delete().eq("id", id));
   const s = mem();
   s.notices = s.notices.filter((n) => n.id !== id);
@@ -157,13 +163,13 @@ export async function deleteNotice(id: string) {
 
 /* ---------- Inquiries ---------- */
 export async function listInquiries(): Promise<Inquiry[]> {
-  const c = sb();
+  const c = await sb();
   if (c) return must(await c.from("inquiries").select("*").order("created_at", { ascending: false })).map(toInquiry);
   return [...mem().inquiries].sort(byDateDesc);
 }
 
 export async function getInquiry(id: string): Promise<Inquiry | null> {
-  const c = sb();
+  const c = await sb();
   if (c) {
     const { data } = await c.from("inquiries").select("*").eq("id", id).maybeSingle();
     return data ? toInquiry(data) : null;
@@ -172,13 +178,13 @@ export async function getInquiry(id: string): Promise<Inquiry | null> {
 }
 
 export async function createInquiry(input: Omit<Inquiry, "id" | "createdAt" | "status" | "memo">) {
-  const c = sb();
+  const c = await sb();
   if (c) return void must(await c.from("inquiries").insert({ ...input, status: "new", memo: "" }));
   mem().inquiries.push({ ...input, id: uid(), status: "new", memo: "", createdAt: now() });
 }
 
 export async function updateInquiry(id: string, patch: { status?: InquiryStatus; memo?: string }) {
-  const c = sb();
+  const c = await sb();
   if (c) return void must(await c.from("inquiries").update(patch).eq("id", id));
   const q = mem().inquiries.find((x) => x.id === id);
   if (q) Object.assign(q, patch);
